@@ -1,0 +1,24 @@
+.main-body {
+    margin: 100px 200px;
+}
+
+.text-secondary {
+    color: #595c5e
+}
+
+.ac-list {
+    padding-right: 0;
+}
+
+.ac {
+    margin: 30px 0;
+}
+
+.ac-title {
+    font-size: large;
+    margin-bottom: 2px;
+}
+
+.ac-content {
+    font-size: small;
+}

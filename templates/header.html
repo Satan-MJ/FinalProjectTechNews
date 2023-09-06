@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-bg fixed-top" role="navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1 text-primary" href="../" target="_parent">Final Project Tech News</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="../" target="_parent">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../collections/" target="_parent">Collections</a>
+                </li>
+            </ul>
+            <form action="../search/" class="d-flex" method="post" role="search">
+                {% csrf_token %}
+                <input aria-label="Search" class="form-control me-2" name="keyword" placeholder="Search"
+                       type="search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+</body>
+
+<style>
+    .navbar {
+        height: 80px;
+        background-color: white;
+        padding: 0 200px;
+    }
+
+    .navbar-brand {
+        font-weight: bold;
+    }
+
+    .navbar-bg {
+        border-bottom-style: solid;
+        border-bottom-color: #DCDFE6;
+        border-width: thin;
+    }
+</style>
+
+</html>

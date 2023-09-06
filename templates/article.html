@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Final Project Tech News | Analysis</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../static/style.css" rel="stylesheet" type="text/css">
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<div>
+    {% include 'header.html' %}
+</div>
+
+<div class="main-body" style="padding: 0 10px">
+    <h2>{{ title }}</h2>
+    <h6 class="text-body-secondary">{{ src }} {{ date }} {{ time }}</h6>
+
+    <div class="art-body">
+        {% for para in body %}
+        {% if para.photo == 1 %}
+        <div class="img-wrapper">
+            {% load static %}
+            {% load load_pic %}
+            <img src="{% static img_src|addstr:'/'|addstr:para.src %}" class="rounded mx-auto d-block" alt="...">
+            <div>{{ para.capt }}</div>
+        </div>
+        {% endif %}
+        <p>&emsp;&emsp;{{ para.text }}</p>
+        {% endfor %}
+    </div>
+
+    新闻来源：<a href="{{ url }}" target="_blank">{{ url }}</a>
+
+    <hr>
+
+    <div class="comments">
+        <h4>评论</h4>
+
+        <div class="input-group" style="margin-top: 20px">
+            <textarea aria-label="textarea" class="form-control mb-2" id="comment-input"
+                      placeholder="Comment"></textarea>
+            <div class="input-group">
+                <input aria-describedby="button-addon2" aria-label="Username" class="form-control"
+                       id="comment-username" placeholder="Username" type="text">
+                <button class="btn btn-outline-secondary" id="comment-button" type="button">Send</button>
+            </div>
+        </div>
+
+        <ul class="list-group list-group-flush comments-list">
+
+        </ul>
+    </div>
+
+    <script>
+        function add_comment(comment) {
+            $(".comments-list").prepend(`
+                <li class="list-group-item comment" id="comment-${comment.id}">
+                    <div class="texts" style="float: left; text-align: left">
+                        <div class="text-primary"><strong>${comment.username}</strong></div>
+                        <div>${comment.comment}</div>
+                        <div class="text-secondary"><small>${comment.date} ${comment.time}</small></div>
+                    </div>
+                    <button type="button" class="btn-close" aria-label="Close" style="float: right" onclick="del_comment(${comment.id})"></button>
+                </li>
+            `);
+        }
+
+        $("#comment-button").click(function () {
+            const csrftoken = Cookies.get('csrftoken');
+            $.ajax({
+                url: "#",
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                },
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                data: {
+                    "article_id": "{{ id }}",
+                    "operation": "add",
+                    "comment": $("#comment-input").val(),
+                    "username": $("#comment-username").val()
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        $("#comment-input").val('')
+                        $("#comment-username").val('')
+                        add_comment(data)
+                    } else {
+                        alert(data.msg)
+                    }
+
+                }
+            });
+        })
+
+        function del_comment(id) {
+            const csrftoken = Cookies.get('csrftoken');
+            $.ajax({
+                url: "#",
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                },
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                data: {
+                    "article_id": "{{ id }}",
+                    "operation": "del",
+                    "id": id
+                },
+                success: function (comments) {
+                    $("#comment-" + id).remove()
+                }
+            });
+        }
+
+        var data = "{{ comments }}"
+        var comments = JSON.parse(data.replace(/\&quot;/g, '\"'))
+        for (var i = 0; i < comments.length; i++) {
+            add_comment(comments[i])
+        }
+    </script>
+</div>
+
+
+<script crossorigin="anonymous"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<style>
+    .art-body {
+        margin-top: 40px;
+    }
+
+    .img-wrapper {
+        padding: 20px 100px;
+        text-align: center;
+        align-items: baseline;
+        justify-content: center;
+    }
+
+    img {
+        max-width: 80%;
+        height: auto;
+    }
+
+    .comments {
+        margin-top: 40px;
+    }
+
+    .comments-list {
+        margin-top: 30px;
+    }
+
+    .comment {
+        text-align: center;
+    }
+</style>

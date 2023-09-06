@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Final Project Tech News | Collections</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../static/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div>
+    {% include 'header.html' %}
+</div>
+
+<div class="main-body" style="padding: 0 10px">
+    <h3>
+        Collections
+    </h3>
+
+    <div>Placeholder for filter & sort options</div>
+    <div class="ac-list">
+        <script>
+            for (i = 0; i < 10; i++) {
+                document.write(`
+                    <div class="ac">
+                        <strong>Reuters</strong> 2022-12-08 13:23
+                        <div><a class="ac-title link-offset-2 link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="/hi/">Earthquake of magnitude 7.0 strikes Bali Sea, Indonesia</a></div>
+                        <p class="ac-content text-secondary">A strong earthquake of 7.0 magnitude struck deep in the sea north of Bali and Lombok islands in Indonesia early on Tuesday, ...
+                        </p>
+                    </div>
+                `)
+            }
+        </script>
+    </div>
+
+</div>
+
+
+<script crossorigin="anonymous"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+<style>
+
+</style>
